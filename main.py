@@ -18,8 +18,6 @@ class OpeningHoursFormatter:
         except TypeError:
             raise ValueError("Не корректный формат JSON")
 
-        self.data_json = data_json
-
     def format_opening_hours(self) -> str:
         """
         Форматирования часов работы для каждого дня
