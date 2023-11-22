@@ -1,5 +1,6 @@
 from typing import Dict, Union
 from datetime import datetime as dt
+import json
 
 
 class OpeningHoursFormatter:
@@ -9,6 +10,14 @@ class OpeningHoursFormatter:
     :param data_json: словарь с данными о часах работы
     """
     def __init__(self, data_json) -> None:
+        if not isinstance(data_json, dict):
+            raise ValueError("Не верный входной формат. Передайте словарь")
+
+        try:
+            json.dumps(data_json)
+        except TypeError:
+            raise ValueError("Не корректный формат JSON")
+
         self.data_json = data_json
 
     def format_opening_hours(self) -> str:
@@ -85,6 +94,13 @@ json_data = {
                 {"type": "close", "value": 75600}
             ]
         }
+
+# Для проверки на корректный формат ввода
+# json_data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+# Для проверки на корректный формат JSON
+# json_data = {"key": lambda x: x}
 
 formatter = OpeningHoursFormatter(json_data)
 result = formatter.format_opening_hours()
